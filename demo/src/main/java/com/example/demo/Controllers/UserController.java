@@ -24,6 +24,7 @@ public class UserController {
     // Signup route - this be good
     @PostMapping("/signup")
     public String signup(@RequestBody Map<String, Object> userData) {
+        int user_id;
         // Logic for user signup (e.g., save user to database)
         //so first we actually need to get information from the userData
         String username = (String) userData.get("username");
@@ -100,18 +101,32 @@ public class UserController {
     //this we are keeping
     @PutMapping("/changePassword")
     public boolean changePassword(@RequestBody Map<String, Object> userData) {
-        // Logic for changing the password (e.g., update password in database)
         String username = (String) userData.get("username");
+        String currentPassword = (String) userData.get("password");
         String newPassword = (String) userData.get("newPassword");
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String hashedPassword = passwordEncoder.encode(newPassword);
-        System.out.println("Username: " + username + ", New Hashed Password: " + hashedPassword);
-        //now we need to update the db with the new password
+
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
-            // Create a Statement object
+            //check the password
+            String getPasswordQuery = "SELECT password FROM user WHERE username = '" + username + "';";
+            try (Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(getPasswordQuery)) {
+                if (resultSet.next()) {
+                    String dbPassword = resultSet.getString("password");
+                    if (!passwordEncoder.matches(currentPassword, dbPassword)) {
+                        System.out.println("Current password is incorrect for user: " + username);
+                        return false; // Current password is incorrect
+                    }
+                } else {
+                    System.out.println("User not found: " + username);
+                    return false; // User does not exist
+                }
+            }
+
+            //so check to see if ze password matches and then execute ze update query
+            String hashedPassword = passwordEncoder.encode(newPassword);
+            String changePasswordQuery = "UPDATE user SET password = '" + hashedPassword + "' WHERE username = '" + username + "';";
             try (Statement statement = connection.createStatement()) {
-                // Execute the query
-                String changePasswordQuery = "UPDATE users SET password = '" + hashedPassword + "' WHERE username = '" + username + "';";
                 int rowsAffected = statement.executeUpdate(changePasswordQuery);
                 if (rowsAffected > 0) {
                     System.out.println("Password changed successfully for user: " + username);
@@ -140,7 +155,7 @@ public class UserController {
             // Create a Statement object
             try (Statement statement = connection.createStatement()) {
                 //exeecute the query
-                String editProfileQuery = "UPDATE users SET username = '" + newUsername + "' WHERE username = '" + username + "';";
+                String editProfileQuery = "UPDATE user SET username = '" + newUsername + "' WHERE username = '" + username + "';";
                 int rowsAffected = statement.executeUpdate(editProfileQuery);
                 if (rowsAffected > 0) {
                     System.out.println("Profile updated successfully for user: " + username);
