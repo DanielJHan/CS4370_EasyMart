@@ -7,8 +7,8 @@ import './styles/Wrapper.css'
 function App() {
   return (
     <div id='wrapper'>
-      <Header></Header>
-      <Body></Body>
+      <h1>Welcome to EasyMart!</h1>
+      <h3>The one-stop shop for your fashion needs</h3>
     </div>
   );
 }
