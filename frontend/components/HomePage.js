@@ -24,7 +24,7 @@ const HomePage = () => {
 
       {/* Main content */}
       <main className="p-6 grid gap-4">
-        <Link href="/search" className="block bg-blue-500 text-white p-4 rounded shadow hover:bg-blue-600 transition">
+        <Link href="/products" className="block bg-blue-500 text-white p-4 rounded shadow hover:bg-blue-600 transition">
           🔍 Search Products
         </Link>
         <Link href="/review" className="block bg-green-500 text-white p-4 rounded shadow hover:bg-green-600 transition">

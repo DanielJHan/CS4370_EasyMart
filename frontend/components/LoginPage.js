@@ -5,17 +5,36 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    if (email && password) {
-      localStorage.setItem("token", "dummy-token");
-      router.push("/home");
+    if (username && password) {
+      try {
+        const response = await fetch("http://localhost:8080/user/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, password }),
+        });
+
+        const success = await response.json(); // backend returns boolean
+
+        if (success === true) {
+          localStorage.setItem("token", "dummy-token"); // optional token logic
+          router.push("/home");
+        } else {
+          alert("Login failed: Incorrect username or password");
+        }
+      } catch (err) {
+        console.error("Login error:", err);
+        alert("An error occurred during login");
+      }
     } else {
-      alert("Please enter email and password");
+      alert("Please enter username and password");
     }
   };
 
@@ -24,11 +43,11 @@ const LoginPage = () => {
       <h2 className="text-xl font-bold mb-4">Login</h2>
       <form onSubmit={handleLogin} className="flex flex-col gap-4">
         <input
-          type="email"
-          placeholder="Email"
+          type="text"
+          placeholder="Username"
           className="p-2 border rounded"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
         />
         <input
           type="password"
@@ -38,7 +57,7 @@ const LoginPage = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <button className="bg-blue-500 text-white p-2 rounded" type="submit">
-          <Link href="/home">Login</Link>
+          Login
         </button>
       </form>
       <p className="mt-4 text-sm">

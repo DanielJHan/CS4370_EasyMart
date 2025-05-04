@@ -5,16 +5,38 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 const SignupPage = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
-    if (email && password) {
-      // Here you would typically call an API to register the user
-      localStorage.setItem("token", "dummy-token");
-      router.push("/home");
+    if (username && password) {
+      try {
+        const response = await fetch("http://localhost:8080/user/signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: username, // match what your backend expects
+            password: password,
+          }),
+        });
+  
+        if (response.ok) {
+          const data = await response.text(); // assuming backend returns plain text
+          console.log(data);
+          localStorage.setItem("token", "dummy-token"); // optional
+          router.push("/home");
+        } else {
+          const error = await response.text();
+          alert("Signup failed: " + error);
+        }
+      } catch (err) {
+        console.error("Signup error:", err);
+        alert("An error occurred during signup.");
+      }
     } else {
       alert("Please fill in all fields");
     }
@@ -25,11 +47,11 @@ const SignupPage = () => {
       <h2 className="text-xl font-bold mb-4">Sign Up</h2>
       <form onSubmit={handleSignup} className="flex flex-col gap-4">
         <input
-          type="email"
-          placeholder="Email"
+          type="text"
+          placeholder="Username"
           className="p-2 border rounded"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
         />
         <input
           type="password"

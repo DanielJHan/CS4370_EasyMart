@@ -21,10 +21,10 @@
       "static/chunks/main-app.js",
       "static/chunks/app/home/page.js"
     ],
-    "/search/page": [
+    "/products/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/search/page.js"
+      "static/chunks/app/products/page.js"
     ],
     "/review/page": [
       "static/chunks/webpack.js",
@@ -40,11 +40,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/edit-profile/page.js"
-    ],
-    "/signup/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/signup/page.js"
     ]
   }
 }
