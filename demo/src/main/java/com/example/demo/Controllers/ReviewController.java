@@ -2,8 +2,8 @@ package com.example.demo.Controllers;
 
 import org.springframework.web.bind.annotation.*;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
+
 
 @RestController
 @RequestMapping("/review")
@@ -16,15 +16,16 @@ public class ReviewController {
     private static final String DB_PASSWORD = "mysqlpass";
 
     @GetMapping("/getReview")
-    public double getReviews(@RequestParam("product_id") int productId) {
+    public double getReviews(@RequestBody Map<String, Object> requestData) {
         double averageRating = 0.0;
-    
+        int productId = (int) requestData.get("product_id");
+
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
             // Query to fetch all ratings for the given product ID
             String query = "SELECT AVG(rating) AS average_rating FROM review WHERE product_id = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setInt(1, productId);
-    
+
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     if (resultSet.next()) {
                         averageRating = resultSet.getDouble("average_rating");
@@ -36,7 +37,7 @@ public class ReviewController {
             // Return 0.0 in case of an error
             return 0.0;
         }
-    
+
         // Return the average rating
         return averageRating;
     }

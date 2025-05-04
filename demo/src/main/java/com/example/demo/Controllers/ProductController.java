@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.sql.DriverManager;
 import java.sql.Connection;
-import java.sql.SQLException;
+//import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -22,32 +22,34 @@ public class ProductController {
     //get products route (will get all products)
     @GetMapping("/getProducts")
     public String[][] getProducts() {
-        //the goal: we start by getting all info about products, and putting it in a 2D array
-        //so first we need to connect to the db and make a query
+        String[][] products = null;
+
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
-            //now it is time for a statement
-            try (Statement statement = connection.createStatement()) {
-                //now it time to make ze query yessir
+            try (Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
                 String query = "SELECT * FROM product;";
                 ResultSet resultSet = statement.executeQuery(query);
-                //now given this data, we need to put it in an array, not to sure how we want to send the info ngl
-                //gonna use a loop for this
-                for (int i = 0; resultSet.next(); i++) {
-                    //get info and put it in ze array
-                    
-                    
-                }
 
-            } catch (Exception e) {
-                System.out.println("Error when making a statement: " + e.getMessage());
-                return new String[][]{{"Error when making a statement: " + e.getMessage()}};
+                resultSet.last();
+                int rowCount = resultSet.getRow();
+                resultSet.beforeFirst(); 
+
+                products = new String[rowCount][4]; // Assuming 4 columns: product_id, product_name, product_price, product_description
+
+                int i = 0;
+                while (resultSet.next()) {
+                    products[i][0] = String.valueOf(resultSet.getInt("product_id"));
+                    products[i][1] = resultSet.getString("product_pic");
+                    products[i][2] = resultSet.getString("model");
+                    products[i][3] = String.valueOf(resultSet.getDouble("price"));
+                    i++;
+                }
             }
         } catch (Exception e) {
             System.out.println("Error when trying to retrieve products: " + e.getMessage());
             return new String[][]{{"Error when trying to retrieve products: " + e.getMessage()}};
         }
 
-        return new String[][]{{"product1", "product2", "product3"}};
+        return products;
     }
 
 }

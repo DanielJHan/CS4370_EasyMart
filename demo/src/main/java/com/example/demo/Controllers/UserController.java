@@ -171,6 +171,48 @@ public class UserController {
         }
     }
 
+    //this is for the delete endpoint functionality
+    @DeleteMapping("/delete")
+    public boolean deleteAccount(@RequestBody Map<String, Object> userData) {
+        String username = (String) userData.get("username");
+        String password = (String) userData.get("password");
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
+            //if user exists, and if the password is correct, then we will delete ze account
+            String getPasswordQuery = "SELECT password FROM user WHERE username = '" + username + "';";
+            try (Statement statement = connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(getPasswordQuery)) {
+                if (resultSet.next()) {
+                    String dbPassword = resultSet.getString("password");
+                    if (!passwordEncoder.matches(password, dbPassword)) {
+                        System.out.println("Current password is incorrect for user: " + username);
+                        return false; //if ze passworde is incorrect
+                    }
+                } else {
+                    System.out.println("User not found: " + username);
+                    return false; //user acc not found or doesn't exist
+                }
+            }
+
+            //we made it past the account confirmation part, now it is time to delete ze account
+            String deleteAccountQuery = "DELETE FROM user WHERE username = '" + username + "';";
+            try (Statement statement = connection.createStatement()) {
+                int rowsAffected = statement.executeUpdate(deleteAccountQuery);
+                if (rowsAffected > 0) {
+                    System.out.println("Account deleted successfully for user: " + username);
+                    return true;
+                } else {
+                    System.out.println("Failed to delete account for user: " + username);
+                    return false;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL Error: " + e.getMessage());
+            return false;
+        }
+    }
+
     //Testing out Things
     @PostMapping("/test")
     public String test() {
