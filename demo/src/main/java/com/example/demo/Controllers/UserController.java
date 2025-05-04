@@ -38,11 +38,9 @@ public class UserController {
             try (Statement statement = connection.createStatement()) {
                 //now it is time for ze query 
                 //basically we are inserting the values in the db and make sure to use the hashedPass
-                String signupQuery = "INSERT INTO user (username, password) " + "VALUES ('" + username + ", '" + hashedPassword + "');";
-                //now itsa time to execute ze query and stuff
-                //a clever way to tell if it is successful to get rowsAffected. if it is 1, then we good, else we no good
+                String signupQuery = "INSERT INTO user (username, password) VALUES ('" + username + "', '" + hashedPassword + "');";                //a clever way to tell if it is successful to get rowsAffected. if it is 1, then we good, else we no good
                 int rowsAffected = statement.executeUpdate(signupQuery);
-                if (rowsAffected > 1) {
+                if (rowsAffected > 0) {
                     System.out.println("The user has signed up successfully!");
                     return "Signup was successful";
                 } else {
@@ -69,14 +67,13 @@ public class UserController {
         String username = (String) userData.get("username");
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String password = (String) userData.get("password");
-        System.out.println("Username: " + username + ", Hashed Password: " + password);
         //now here is the logic for whether it is correct or not using the db query
         //general idea, query for the values if username match in db, then check if the password in that value matches up
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
             // Create a Statement object
             try (Statement statement = connection.createStatement()) {
                 // Execute the query
-                String loginQuery = "SELECT password FROM users WHERE username = '" + username + "';";
+                String loginQuery = "SELECT password FROM user WHERE username = '" + username + "';";
                 try (ResultSet resultSet = statement.executeQuery(loginQuery)) {
                     if (resultSet.next()) {
                         String dbPassword = resultSet.getString("password");
