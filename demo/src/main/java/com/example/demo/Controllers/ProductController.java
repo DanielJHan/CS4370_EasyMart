@@ -22,6 +22,7 @@ public class ProductController {
     //get products route (will get all products)
     @GetMapping("/getProducts")
     public String[][] getProducts() {
+        //the goal: we start by getting all info about products, and putting it in a 2D array
         //so first we need to connect to the db and make a query
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
             //now it is time for a statement
@@ -49,5 +50,4 @@ public class ProductController {
         return new String[][]{{"product1", "product2", "product3"}};
     }
 
-    //maybe routes for sorting products or getting only products of specific brand or smth? yet to be seen?
 }

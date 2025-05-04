@@ -21,7 +21,7 @@ public class UserController {
     private static final String DB_USERNAME = "root";
     private static final String DB_PASSWORD = "mysqlpass";
 
-    // Signup route
+    // Signup route - this be good
     @PostMapping("/signup")
     public String signup(@RequestBody Map<String, Object> userData) {
         // Logic for user signup (e.g., save user to database)
@@ -60,6 +60,7 @@ public class UserController {
     }
 
     // Login route
+    //defo need this
     @PostMapping("/login")
     public boolean login(@RequestBody Map<String, Object> userData) {
         //Maybe it should return a boolean on whether it was successful or not? keeping it as string for now
@@ -99,6 +100,7 @@ public class UserController {
 
     }
 
+    //this we are keeping
     @PutMapping("/changePassword")
     public boolean changePassword(@RequestBody Map<String, Object> userData) {
         // Logic for changing the password (e.g., update password in database)
@@ -128,6 +130,8 @@ public class UserController {
         }
     }
 
+
+    //not sure if we need this ngl so will maybe remove it
     @PutMapping("/editprofile")
     public boolean editProfile(@RequestBody Map<String, Object> userData) {
         System.out.println("This is the edit profile endpoint to make sure everything is working");
@@ -138,7 +142,7 @@ public class UserController {
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
             // Create a Statement object
             try (Statement statement = connection.createStatement()) {
-                // Execute the query
+                //exeecute the query
                 String editProfileQuery = "UPDATE users SET username = '" + newUsername + "' WHERE username = '" + username + "';";
                 int rowsAffected = statement.executeUpdate(editProfileQuery);
                 if (rowsAffected > 0) {
