@@ -6,6 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.ResultSet;
@@ -68,13 +69,9 @@ public class UserController {
         String username = (String) userData.get("username");
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String password = (String) userData.get("password");
-        //now here is the logic for whether it is correct or not using the db query
-        //general idea, query for the values if username match in db, then check if the password in that value matches up
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
-            // Create a Statement object
             try (Statement statement = connection.createStatement()) {
-                // Execute the query
-                String loginQuery = "SELECT password FROM user WHERE username = '" + username + "';";
+                String loginQuery = "SELECT user_id, password FROM user WHERE username = '" + username + "';";
                 try (ResultSet resultSet = statement.executeQuery(loginQuery)) {
                     if (resultSet.next()) {
                         String dbPassword = resultSet.getString("password");
@@ -142,35 +139,6 @@ public class UserController {
         }
     }
 
-
-    //not sure if we need this ngl so will maybe remove it
-    @PutMapping("/editprofile")
-    public boolean editProfile(@RequestBody Map<String, Object> userData) {
-        System.out.println("This is the edit profile endpoint to make sure everything is working");
-        //the user will only be able to edit their username
-        String username = (String) userData.get("username");
-        String newUsername = (String) userData.get("newUsername");
-        //now we need to update the db with the new username
-        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
-            // Create a Statement object
-            try (Statement statement = connection.createStatement()) {
-                //exeecute the query
-                String editProfileQuery = "UPDATE user SET username = '" + newUsername + "' WHERE username = '" + username + "';";
-                int rowsAffected = statement.executeUpdate(editProfileQuery);
-                if (rowsAffected > 0) {
-                    System.out.println("Profile updated successfully for user: " + username);
-                    return true;
-                } else {
-                    System.out.println("Failed to update profile for user: " + username);
-                    return false;
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println("SQL Error: " + e.getMessage());
-            return false;
-        }
-    }
-
     //this is for the delete endpoint functionality
     @DeleteMapping("/delete")
     public boolean deleteAccount(@RequestBody Map<String, Object> userData) {
@@ -179,26 +147,29 @@ public class UserController {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
-            //if user exists, and if the password is correct, then we will delete ze account
-            String getPasswordQuery = "SELECT password FROM user WHERE username = '" + username + "';";
-            try (Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery(getPasswordQuery)) {
-                if (resultSet.next()) {
-                    String dbPassword = resultSet.getString("password");
-                    if (!passwordEncoder.matches(password, dbPassword)) {
-                        System.out.println("Current password is incorrect for user: " + username);
-                        return false; //if ze passworde is incorrect
+            String getPasswordQuery = "SELECT password FROM user WHERE username = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(getPasswordQuery)) {
+                preparedStatement.setString(1, username);
+
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        String dbPassword = resultSet.getString("password");
+                        if (!passwordEncoder.matches(password, dbPassword)) {
+                            System.out.println("Current password is incorrect for user: " + username);
+                            return false; //wrong password
+                        }
+                    } else {
+                        System.out.println("User not found: " + username);
+                        return false; //usr couldn't be found
                     }
-                } else {
-                    System.out.println("User not found: " + username);
-                    return false; //user acc not found or doesn't exist
                 }
             }
 
-            //we made it past the account confirmation part, now it is time to delete ze account
-            String deleteAccountQuery = "DELETE FROM user WHERE username = '" + username + "';";
-            try (Statement statement = connection.createStatement()) {
-                int rowsAffected = statement.executeUpdate(deleteAccountQuery);
+            String deleteAccountQuery = "DELETE FROM user WHERE username = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(deleteAccountQuery)) {
+                preparedStatement.setString(1, username);
+
+                int rowsAffected = preparedStatement.executeUpdate();
                 if (rowsAffected > 0) {
                     System.out.println("Account deleted successfully for user: " + username);
                     return true;

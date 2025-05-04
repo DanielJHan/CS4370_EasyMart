@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.Connection;
 //import java.sql.SQLException;
 import java.sql.ResultSet;
@@ -25,15 +26,16 @@ public class ProductController {
         String[][] products = null;
 
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
-            try (Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
-                String query = "SELECT * FROM product;";
-                ResultSet resultSet = statement.executeQuery(query);
+            // Use a prepared statement to fetch all products
+            String query = "SELECT product_id, product_pic, model, price FROM product;";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY)) {
+                ResultSet resultSet = preparedStatement.executeQuery();
 
                 resultSet.last();
                 int rowCount = resultSet.getRow();
-                resultSet.beforeFirst(); 
+                resultSet.beforeFirst(); // Move the cursor back to the start
 
-                products = new String[rowCount][4]; // Assuming 4 columns: product_id, product_name, product_price, product_description
+                products = new String[rowCount][4]; // 4 columns: product_id, product_pic, model, price
 
                 int i = 0;
                 while (resultSet.next()) {
