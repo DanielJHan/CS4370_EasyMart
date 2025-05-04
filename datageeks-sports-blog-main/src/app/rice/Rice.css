@@ -1,0 +1,32 @@
+#lead_image {
+    background-image: url('./rice_media/rice.jpg');
+    aspect-ratio: 3487 / 2299;
+}
+
+#yards_bar1 {
+    background-image: url('./rice_media/yards2_25.jpg');
+}
+
+#yards_bar2 {
+    background-image: url('./rice_media/yards1_25.jpg');
+}
+
+#yards_bar1:hover, #yards_bar2:hover {
+    transform: scale(1.02)
+}
+
+#receiving_touchdowns_2_25 {
+    background-image: url('./rice_media/receiving_touchdowns_2_25.jpg');
+}
+
+#receiving_touchdowns_1_25 {
+    background-image: url('./rice_media/receiving_touchdowns_1_25.jpg');
+}
+
+#receiving_touchdowns_1_25:hover, #receiving_touchdowns_2_25:hover {
+    transform: scale(1.02)
+}
+
+#yards_bar1, #yards_bar2, #receiving_touchdowns_1_25, #receiving_touchdowns_2_25 {
+    aspect-ratio: 3000 / 1944;
+}

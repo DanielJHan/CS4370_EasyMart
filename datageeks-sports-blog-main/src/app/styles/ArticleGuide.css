@@ -1,0 +1,112 @@
+.full {
+    max-width: 100%;
+    height: 100%;
+    margin: 0px;
+    margin-left: 25px;
+    padding-right: 2%;
+}
+
+.full h1 {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    padding-top: .1vh;
+    padding-bottom: 2vh;
+    padding-right: 4vw;
+    font-size: 30pt;
+    font-weight: 750;
+}
+
+.full h2, .full h3 {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    font-size: 24pt;
+}
+
+.full h4 {
+    display: inline;
+}
+
+.full p {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-weight: 300;
+    font-size: 18pt;
+    line-height: 135%;
+}
+
+.full li {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    padding-top: 7.5px;
+    padding-bottom: 7.5px;
+    font-weight: 300;
+    font-size: 18pt;
+    line-height: 135%;
+}
+
+.full p i {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    font-weight: 300;
+    font-size: 18pt;
+}
+
+.full #inline {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    font-weight: 300;
+    font-size: 18pt;
+    display: inline;
+}
+
+.full i {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: 300;
+    font-size: 12pt;
+}
+
+#source2 {
+    font-weight: 150;
+    color: white;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    padding-bottom: 1vw;
+    padding-right: 3vw;
+}
+
+.image-in-article {
+    border-radius: 2vw;
+    background-size: cover;
+    background-position: center;
+    max-width: 1350px;
+    width: 100%;
+    max-height: 875px;
+    height: fit-content;
+    margin-top: 1vw;
+    margin-bottom: 1vw;
+    transition: transform .25s;
+    justify-self: left;
+}
+
+ol, ul {
+    margin-left: 25px;
+}
+
+@media (prefers-color-scheme: dark) {
+    .full h1, .full h2, .full h3, .full h4, .full p, .full .source, .full ol, .full li {
+        color: white; 
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    .full h1, .full h2, .full h3, .full h4, .full p, .full .source, .full ol, .full li {
+        color: #171717; 
+    }
+}
+
+.full b {
+    display: inline-flex;
+    margin: 0;
+
+}

@@ -1,0 +1,12 @@
+#lead_image {
+    border-radius: 2vw;
+    background-size: cover;
+}
+
+#lead_image {
+    background-image: url('https://media-cldnry.s-nbcnews.com/image/upload/rockcms/2024-04/shohei-ohtani-mc-240401-d5172b.jpg');
+    width: 60vw;
+    height: 35vw;
+    padding-bottom: 1vw;
+}
+
