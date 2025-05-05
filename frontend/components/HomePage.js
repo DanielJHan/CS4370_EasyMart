@@ -53,7 +53,7 @@ const HomePage = () => {
             🔍 Browse Products
           </Link>
           <Link href="/sales" className="block bg-green-500 font-sans text-white text-xl flex items-center p-4 rounded-2xl shadow hover:bg-green-600 transition">
-            📝 View Reviews
+            💸 View Promotions
           </Link>
           <Link href="/orders" className="block bg-red-500 font-sans text-white text-xl flex items-center p-4 rounded-2xl shadow hover:bg-red-600 transition">
             📦 Your Orders
