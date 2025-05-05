@@ -1,4 +1,4 @@
-// File: /Users/parkerbrademann/Desktop/CS4370_EasyMart/frontend/src/app/page.js
+// File: C:\Users\17624\Documents\GitHub\CS4370_EasyMart\frontend\src\app\page.js
 import * as entry from '../../../src/app/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
