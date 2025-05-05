@@ -15,6 +15,7 @@ const SalesPage = () => {
 
   return (
     <div className="max-w-3xl mx-auto p-4">
+      {/* this is the discounts title and retur home button*/}
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-sans font-bold">Current Discounts</h1>
         <Link
@@ -26,6 +27,7 @@ const SalesPage = () => {
       </div>
       <p className="font-md font-sans text-black-500 mb-5">Note: conditions subject to change.</p>
 
+      { /* items on sale begin here */}
       <div className="space-y-4 font-sans">
         {products.map((product) => (
           <div
@@ -38,6 +40,8 @@ const SalesPage = () => {
               className="w-24 h-24 object-cover rounded"
             />
 
+            { /* this part stores the original price and current price next to each other,
+            then the date of the sale ending below that */}
             <div className="flex-grow">
               <h2 className="text-lg font-semibold">{product.model}</h2>
               <p className="text-gray-600">

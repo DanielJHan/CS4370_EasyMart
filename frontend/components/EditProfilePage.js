@@ -8,7 +8,7 @@ const EditProfilePage = () => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [deletePassword, setDeletePassword] = useState(""); // NEW
+  const [deletePassword, setDeletePassword] = useState(""); // used for account deletion
   const [message, setMessage] = useState("");
   const [username, setUsername] = useState("");
   const [totalOrders, setTotalOrders] = useState(0);
@@ -95,13 +95,13 @@ const EditProfilePage = () => {
 
   const handleDeleteAccount = async () => {
     const confirmed = window.confirm(
-      "Are you sure you want to delete your account? This cannot be undone."
+      "Are you sure you want to delete your account? All data will be lost."
     );
     if (!confirmed) return;
 
     try {
       const response = await fetch("http://localhost:8080/user/delete", {
-        method: "POST", // was DELETE — POST supports body
+        method: "POST", // was DELETE but apparently springboot doesn't like that
         headers: {
           "Content-Type": "application/json",
         },
@@ -126,6 +126,7 @@ const EditProfilePage = () => {
   };
 
   return (
+    /* this up here is the info section that displays order count and money spent*/
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow">
       <h2 className="text-2xl font-bold font-sans mb-4">Welcome, {username}!</h2>
       <p className="mb-4 font-sans text-gray-700">
@@ -136,6 +137,7 @@ const EditProfilePage = () => {
         <span className="font-semibold font-sans">${parseFloat(totalSpent).toFixed(2)}</span>
       </p>
 
+      {/* this is the reset password form */}
       <h2 className="text-2xl font-sans font-bold mb-4">Change Password</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -178,6 +180,9 @@ const EditProfilePage = () => {
           <Link href={"/home"}>Go Home</Link>
         </button>
       </form>
+
+
+      {/* account deletion below here*/}
 
       <hr className="my-6" />
       <h2 className="text-xl font-bold mb-2 text-red-600 font-sans">Account Deletion</h2>

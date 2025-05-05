@@ -12,7 +12,7 @@ const LoginPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     if (username && password) {
-      if (username.length < 3) {
+      if (username.length < 2) {
         alert("Username must be at least 3 characters.");
       } 
       if (password.length < 6) {
@@ -31,7 +31,7 @@ const LoginPage = () => {
 
         if (data.success) {
           localStorage.setItem("username", username);
-          localStorage.setItem("user_id", data.user_id); // kept for orders page
+          localStorage.setItem("user_id", data.user_id); // keep this for the orders page
           router.push("/home");
         } else {
           alert("Login failed: Incorrect username or password");

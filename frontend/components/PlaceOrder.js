@@ -41,7 +41,7 @@ const PlaceOrder = ({ amount }) => {
   return (
     <div className="self-center">
     <form onSubmit={handleSubmit} className="flex flex-col gap-4 max-w-xs">
-      <label className="font-semibold mt-2 font-sans">Order Total</label>
+      <label className="font-semibold mt-2 font-sans">Your Order Total</label>
       <input
         type="number"
         value={quantity}
@@ -51,7 +51,7 @@ const PlaceOrder = ({ amount }) => {
         step="any"
       />
       <button type="submit" className="bg-blue-400 hover:bg-blue-500 text-white font-sans p-2 rounded-xl">
-        Submit
+        Checkout
       </button>
     </form>
     </div>

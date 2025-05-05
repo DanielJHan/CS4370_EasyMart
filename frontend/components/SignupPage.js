@@ -13,7 +13,7 @@ const SignupPage = () => {
     e.preventDefault();
     if (username && password) {
       if (username.length < 2) {
-        alert("Username must be at least 3 characters.");
+        alert("Username must be at least 2 characters.");
         return;
       } 
       if (password.length < 6) {

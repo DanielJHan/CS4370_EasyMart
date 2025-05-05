@@ -18,6 +18,7 @@ const ProductsPage = () => {
 
   return (
     <div className="max-w-3xl mx-auto p-4">
+      { /* title and header section with return to home bttn*/}
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-sans font-bold">Products</h1>
         <Link href="/home" className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 font-sans rounded-xl">
@@ -44,6 +45,7 @@ const ProductsPage = () => {
           <p className="text-gray-600">${product.price.toFixed(2)}</p>
           <p className="text-sm text-blue-600">
             Rating:{" "}
+            {/* another conditional rendering*/}
             {product.avg_rating !== null && product.avg_rating !== undefined
               ? product.avg_rating.toFixed(1) + " / 5"
               : "No reviews yet"}
@@ -53,6 +55,7 @@ const ProductsPage = () => {
 
 
         <div className="flex items-center gap-2">
+          {/* minus button to remove an item*/}
           <button
             onClick={() =>
               setQuantities((prev) => ({
@@ -64,9 +67,14 @@ const ProductsPage = () => {
           >
             –
           </button>
+
+          
           <span className="min-w-[20px] text-center rounded-2xl">
             {quantities[product.product_id] || 0}
           </span>
+
+
+          {/* plus button to add an item*/}  
           <button
             onClick={() =>
               setQuantities((prev) => ({
@@ -79,10 +87,12 @@ const ProductsPage = () => {
             +
           </button>
         </div>
+        {/* end of products list*/}
 
 
       </div>
       ))}
+    {/* the part that allows the user to actually complete the order*/}
     </div>
       <div className="content-center">
         <UserProvider>

@@ -9,6 +9,7 @@ const HomePage = () => {
   const router = useRouter();
   const [username, setUsername] = useState(null);
 
+  // redirect to landing page if not logged in
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
     if (!storedUsername) {
@@ -17,6 +18,7 @@ const HomePage = () => {
       setUsername(storedUsername);
     }
   }, []);
+
   // handles logout
   const handleLogout = () => {
     localStorage.removeItem("user_id");
@@ -25,6 +27,7 @@ const HomePage = () => {
   };
 
   return (
+    /* this is the store background image for the home page */
     <div
       className="min-h-screen text-white relative"
       style={{

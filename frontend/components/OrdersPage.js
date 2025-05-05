@@ -11,6 +11,7 @@ const OrdersPage = () => {
   
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
+    // redirect user if not logged in
     if (!storedUsername) {
       router.push("/");
       return;
@@ -20,7 +21,7 @@ const OrdersPage = () => {
 
   useEffect(() => {
     const userId = localStorage.getItem("user_id");
-
+    // redirect user if not logged in (as a second check)
     if (!userId) {
       router.push("/");
       return;
@@ -36,15 +37,16 @@ const OrdersPage = () => {
     <div className="max-w-2xl mx-auto p-4">
       <h1 className="text-2xl font-bold font-sans mb-4">Welcome, {username}!</h1>
       <h1 className="text-2xl font-bold mb-4 font-sans">Your Orders</h1>
+      {/* conditional rendering: either "no orders found" or the list */}
       {orders.length === 0 ? (
         <p>No orders found.</p>
       ) : (
         <ul className="space-y-4 mb-10">
           {orders.map((order) => (
             <li key={order.order_id} className="border font-sans p-4 rounded-2xl shadow-sm">
-              <p><strong>Order ID:</strong> {order.order_id}</p>
-              <p><strong>Total:</strong> ${parseFloat(order.order_total).toFixed(2)}</p>
-              <p><strong>Date:</strong> {new Date(order.order_date).toLocaleString()}</p>
+              <p><b>Order ID:</b> {order.order_id}</p>
+              <p><b>Total:</b> ${parseFloat(order.order_total).toFixed(2)}</p>
+              <p><b>Date:</b> {new Date(order.order_date).toLocaleString()}</p>
             </li>
           ))}
         </ul>
