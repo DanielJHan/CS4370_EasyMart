@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import Link from "next/link";
 
 const EditProfilePage = () => {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -10,6 +11,12 @@ const EditProfilePage = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
   const router = useRouter();
+  const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("username");
+    if (storedUsername) setUsername(storedUsername);
+  }, []);
 
   useEffect(() => {
     const username = localStorage.getItem("username");
@@ -40,7 +47,7 @@ const EditProfilePage = () => {
   
     try {
       const response = await fetch("http://localhost:8080/user/change-password", {
-        method: "PUT",
+        method: "PUT", // will update password assuming the current password is correct
         headers: {
           "Content-Type": "application/json",
         },
@@ -51,7 +58,7 @@ const EditProfilePage = () => {
         }),
       });
   
-      const success = await response.json(); // Get true or false
+      const success = await response.json(); // return a boolean indicating if the operation worked
 
       if (success === true) {
         setMessage("Password updated successfully.");
@@ -73,6 +80,7 @@ const EditProfilePage = () => {
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow">
+      <h2 className="text-2xl font-bold mb-4">Welcome, {username}!</h2>
       <h2 className="text-2xl font-bold mb-4">Change Password</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -108,6 +116,11 @@ const EditProfilePage = () => {
           className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
         >
           Update Password
+        </button>
+        <button
+          className="bg-red-500 text-white ml-2 px-4 py-2 rounded hover:bg-red-600"
+        >
+          <Link href={"/home"}>Go Home</Link>
         </button>
       </form>
     </div>

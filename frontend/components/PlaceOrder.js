@@ -1,11 +1,12 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useUser } from "../contexts/UserContexts";
+import { useRouter } from "next/navigation";
 
 const PlaceOrder = ({ amount }) => {
-  const { userID } = useUser();
   const quantity = amount;
+
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,6 +27,7 @@ const PlaceOrder = ({ amount }) => {
         const data = await response.text();
         console.log(data);
         alert("Order placed successfully!");
+        router.push('/home')
       } else {
         const error = await response.text();
         alert("Order failed: " + error);
@@ -39,7 +41,7 @@ const PlaceOrder = ({ amount }) => {
   return (
     <div className="self-center">
     <form onSubmit={handleSubmit} className="flex flex-col gap-4 max-w-xs">
-      <label className="font-semibold">Total Expenditure</label>
+      <label className="font-semibold mt-2">Order Total</label>
       <input
         type="number"
         value={quantity}

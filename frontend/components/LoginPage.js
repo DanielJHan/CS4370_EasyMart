@@ -64,13 +64,13 @@ const LoginPage = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button className="bg-blue-500 text-white p-2 rounded" type="submit">
+        <button className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600" type="submit">
           Login
         </button>
       </form>
       <p className="mt-4 text-sm font-sans">
         Don&apos;t have an account?{" "}
-        <Link href="/signup" className="text-blue-500">Sign up</Link>
+        <Link href="/signup" className="text-blue-500 hover:underline">Sign up</Link>
       </p>
     </div>
   );
