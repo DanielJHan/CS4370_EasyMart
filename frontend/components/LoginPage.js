@@ -48,29 +48,29 @@ const LoginPage = () => {
 
   return (
     <div className="p-4 max-w-sm mx-auto">
-      <h2 className="text-xl font-bold mb-4">Login</h2>
+      <h2 className="text-xl font-bold font-sans mb-4">Login</h2>
       <form onSubmit={handleLogin} className="flex flex-col gap-4">
         <input
           type="text"
           placeholder="Username"
-          className="p-2 border rounded"
+          className="p-2 border rounded font-sans rounded-xl"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
         <input
           type="password"
           placeholder="Password"
-          className="p-2 border rounded"
+          className="p-2 border rounded font-sans rounded-xl"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600" type="submit">
+        <button className="bg-blue-500 font-sans text-white p-2 rounded-xl hover:bg-blue-600" type="submit">
           Login
         </button>
       </form>
       <p className="mt-4 text-sm font-sans">
         Don&apos;t have an account?{" "}
-        <Link href="/signup" className="text-blue-500 hover:underline">Sign up</Link>
+        <Link href="/signup" className="text-blue-500 font-sans hover:underline">Sign up</Link>
       </p>
     </div>
   );

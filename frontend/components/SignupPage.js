@@ -12,7 +12,7 @@ const SignupPage = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     if (username && password) {
-      if (username.length < 3) {
+      if (username.length < 2) {
         alert("Username must be at least 3 characters.");
         return;
       } 
@@ -49,29 +49,29 @@ const SignupPage = () => {
 
   return (
     <div className="p-4 max-w-sm mx-auto">
-      <h2 className="text-xl font-bold mb-4">Sign Up</h2>
+      <h2 className="text-xl font-bold font-sans mb-4">Sign Up</h2>
       <form onSubmit={handleSignup} className="flex flex-col gap-4">
         <input
           type="text"
           placeholder="Username"
-          className="p-2 border rounded"
+          className="p-2 border font-sans rounded-xl"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
         <input
           type="password"
           placeholder="Password"
-          className="p-2 border rounded"
+          className="p-2 border font-sans rounded-xl"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit" className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
+        <button type="submit" className="bg-blue-500 font-sans text-white p-2 rounded-xl hover:bg-blue-600">
           Sign Up
         </button>
       </form>
-      <p className="mt-4 text-sm">
+      <p className="mt-4 font-sans text-sm">
         Already have an account?{" "}
-        <Link href="/login" className="text-blue-500 hover:underline">Login</Link>
+        <Link href="/login" className="text-blue-500 font-sans hover:underline">Login</Link>
       </p>
     </div>
   );

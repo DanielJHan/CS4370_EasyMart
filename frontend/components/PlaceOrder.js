@@ -46,11 +46,11 @@ const PlaceOrder = ({ amount }) => {
         type="number"
         value={quantity}
         readOnly
-        className="border p-2 rounded font-sans"
+        className="border p-2 rounded-xl font-sans"
         min="0"
         step="any"
       />
-      <button type="submit" className="bg-blue-400 hover:bg-blue-500 text-white font-sans p-2 rounded">
+      <button type="submit" className="bg-blue-400 hover:bg-blue-500 text-white font-sans p-2 rounded-xl">
         Submit
       </button>
     </form>

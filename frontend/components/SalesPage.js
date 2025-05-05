@@ -19,7 +19,7 @@ const SalesPage = () => {
         <h1 className="text-2xl font-sans font-bold">Current Discounts</h1>
         <Link
           href="/home"
-          className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 font-sans rounded"
+          className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 font-sans rounded-xl"
         >
           Return to Home
         </Link>
@@ -48,7 +48,7 @@ const SalesPage = () => {
                   ${product.price.toFixed(2)}
                 </span>
               </p>
-              <p className="text-sm text-yellow-600">
+              <p className="text-sm text-blue-600">
                 Rating:{" "}
                 {product.avg_rating !== null && product.avg_rating !== undefined
                   ? product.avg_rating.toFixed(1) + " / 5"

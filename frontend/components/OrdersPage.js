@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const OrdersPage = () => {
   const [orders, setOrders] = useState([]);
@@ -38,16 +39,20 @@ const OrdersPage = () => {
       {orders.length === 0 ? (
         <p>No orders found.</p>
       ) : (
-        <ul className="space-y-4">
+        <ul className="space-y-4 mb-10">
           {orders.map((order) => (
-            <li key={order.order_id} className="border font-sans p-4 rounded-xl shadow-sm">
+            <li key={order.order_id} className="border font-sans p-4 rounded-2xl shadow-sm">
               <p><strong>Order ID:</strong> {order.order_id}</p>
               <p><strong>Total:</strong> ${parseFloat(order.order_total).toFixed(2)}</p>
               <p><strong>Date:</strong> {new Date(order.order_date).toLocaleString()}</p>
             </li>
           ))}
         </ul>
+        
       )}
+      <Link href="/home" className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 font-sans rounded-xl">
+          Return to Home
+      </Link>
     </div>
   );
 };
