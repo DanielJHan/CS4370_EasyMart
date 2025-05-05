@@ -17,9 +17,9 @@ const HomePage = () => {
   return (
     <div className="min-h-screen bg-gray-100 text-gray-800">
       {/* Navbar */}
-      <nav className="bg-white shadow p-4 flex justify-between items-center">
-        <h1 className="text-xl font-bold">Dashboard</h1>
-        <button onClick={handleLogout} className="text-red-500 font-semibold hover:underline">
+      <nav className="bg-red-400 shadow p-4 flex justify-between items-center">
+        <h1 className="text-xl font-bold font-sans text-white">EasyMart</h1>
+        <button onClick={handleLogout} className="text-white font-semibold hover:underline">
           Logout
         </button>
       </nav>

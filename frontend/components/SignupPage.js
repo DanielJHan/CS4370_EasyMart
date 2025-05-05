@@ -12,30 +12,35 @@ const SignupPage = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     if (username && password) {
+      if (username.length < 3) {
+        alert("Username must be at least 3 characters.");
+        return;
+      } 
+      if (password.length < 6) {
+        alert("Password must be at least 6 characters.");
+        return;
+      }
       try {
         const response = await fetch("http://localhost:8080/user/signup", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            username: username, // match what your backend expects
-            password: password,
-          }),
+          body: JSON.stringify({ username, password }),
         });
-  
-        if (response.ok) {
-          const data = await response.text(); // assuming backend returns plain text
-          console.log(data);
-          localStorage.setItem("token", "dummy-token"); // optional
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          localStorage.setItem("username", username);
+          localStorage.setItem("user_id", data.user_id); 
           router.push("/home");
         } else {
-          const error = await response.text();
-          alert("Signup failed: " + error);
+          alert("Sorry, the signup failed. Please try again.");
         }
       } catch (err) {
         console.error("Signup error:", err);
-        alert("An error occurred during signup.");
+        alert("Sorry, the signup failed. Please try again.");
       }
     } else {
       alert("Please fill in all fields");

@@ -12,6 +12,12 @@ const LoginPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     if (username && password) {
+      if (username.length < 3) {
+        alert("Username must be at least 3 characters.");
+      } 
+      if (password.length < 6) {
+        alert("Password must be at least 6 characters.");
+      }
       try {
         const response = await fetch("http://localhost:8080/user/login", {
           method: "POST",

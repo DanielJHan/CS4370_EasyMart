@@ -1,69 +1,42 @@
 "use client";
 
-import React from "react";
-import Link from "next/link";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-const ordersData = [
-  { id: 1, product: "Laptop", quantity: 1, price: 999.99, status: "Shipped" },
-  { id: 2, product: "Headphones", quantity: 2, price: 199.99, status: "Delivered" },
-  { id: 3, product: "Smartphone", quantity: 1, price: 799.99, status: "Pending" },
-  { id: 4, product: "Keyboard", quantity: 1, price: 49.99, status: "Shipped" },
-];
-
 const OrdersPage = () => {
-
+  const [orders, setOrders] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
-    const username = localStorage.getItem("username");
     const userId = localStorage.getItem("user_id");
 
-    if (!username || !userId) {
-      router.push("/"); // redirect to landing page if not logged in
+    if (!userId) {
+      router.push("/");
+      return;
     }
+
+    fetch(`http://localhost:8080/orders/${userId}`)
+      .then((res) => res.json())
+      .then((data) => setOrders(data))
+      .catch((err) => console.error("Failed to fetch orders:", err));
   }, []);
 
   return (
-    <div className="max-w-3xl mx-auto mt-10 p-6 bg-white shadow rounded">
-      <h2 className="text-2xl font-bold mb-4">Your Orders</h2>
-      {ordersData.length === 0 ? (
-        <p className="text-gray-500">You have no orders yet.</p>
+    <div className="max-w-2xl mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">Your Orders</h1>
+      {orders.length === 0 ? (
+        <p>No orders found.</p>
       ) : (
-        <table className="w-full table-auto border-collapse">
-          <thead>
-            <tr>
-              <th className="px-4 py-2 border-b text-left">Product</th>
-              <th className="px-4 py-2 border-b text-left">Quantity</th>
-              <th className="px-4 py-2 border-b text-left">Price</th>
-              <th className="px-4 py-2 border-b text-left">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {ordersData.map((order) => (
-              <tr key={order.id} className="border-b">
-                <td className="px-4 py-2">{order.product}</td>
-                <td className="px-4 py-2">{order.quantity}</td>
-                <td className="px-4 py-2">${order.price.toFixed(2)}</td>
-                <td className="px-4 py-2">
-                  <span
-                    className={`${
-                      order.status === "Shipped"
-                        ? "text-blue-600"
-                        : order.status === "Delivered"
-                        ? "text-green-600"
-                        : "text-yellow-600"
-                    }`}
-                  >
-                    {order.status}
-                  </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <ul className="space-y-4">
+          {orders.map((order) => (
+            <li key={order.order_id} className="border p-4 rounded shadow-sm">
+              <p><strong>Order ID:</strong> {order.order_id}</p>
+              <p><strong>Total:</strong> ${parseFloat(order.order_total).toFixed(2)}</p>
+              <p><strong>Date:</strong> {new Date(order.order_date).toLocaleString()}</p>
+            </li>
+          ))}
+        </ul>
       )}
-      <Link href="/home">Return to Home</Link>
     </div>
   );
 };

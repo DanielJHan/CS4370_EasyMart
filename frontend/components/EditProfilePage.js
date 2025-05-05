@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const EditProfilePage = () => {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -31,6 +32,11 @@ const EditProfilePage = () => {
       setMessage("New passwords do not match.");
       return;
     }
+
+    if (newPassword.length < 6) {
+      setMessage("New password must be at least 6 characters.");
+      return;
+    }
   
     try {
       const response = await fetch("http://localhost:8080/user/change-password", {
@@ -39,21 +45,21 @@ const EditProfilePage = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: localStorage.getItem("username"), // or however you're tracking the user
+          username: localStorage.getItem("username"), 
           currentPassword,
           newPassword,
         }),
       });
   
-      const result = await response.text();
-  
-      if (response.ok) {
+      const success = await response.json(); // Get true or false
+
+      if (success === true) {
         setMessage("Password updated successfully.");
         setTimeout(() => {
           router.push("/home");
         }, 1500);
       } else {
-        setMessage("Failed: " + result);
+        setMessage("Incorrect current password.");
       }
     } catch (err) {
       console.error("Error updating password:", err);
