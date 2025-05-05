@@ -18,23 +18,23 @@ const LandingPage = () => {
         backgroundRepeat: "no-repeat",
       }}
     >
-      {/* Overlay */}
+      {/* overlay for image*/}
       <div className="absolute inset-0 bg-black/60 z-0"></div>
 
-      {/* Navbar */}
-      <nav className="relative z-10 flex justify-between items-center px-6 py-4 bg-red-400 shadow-md">
+      {/* header bar */}
+      <nav className="relative z-10 flex justify-between items-center px-6 py-4 bg-blue-400 shadow-md">
         <h1 className="text-2xl font-bold font-sans">EasyMart</h1>
         <div className="space-x-4">
           <Link href="/login">
-            <button className="bg-white text-blue-700 font-sans px-4 py-2 rounded-md hover:bg-gray-200 transition">Login</button>
+            <button className="bg-white text-blue-700 font-sans px-4 py-2 rounded-md hover:bg-gray-200 hover:underline transition">Login</button>
           </Link>
           <Link href="/signup">
-            <button className="bg-white text-blue-700 font-sans px-4 py-2 rounded-md hover:bg-gray-200 transition">Sign Up</button>
+            <button className="bg-white text-blue-700 font-sans px-4 py-2 rounded-md hover:underline hover:bg-gray-200 transition">Sign Up</button>
           </Link>
         </div>
       </nav>
 
-      {/* Hero Section */}
+      {/* text part of the header */}
       <main className="relative z-10 flex-grow flex mt-10 justify-center text-center px-6">
         <div>
           <h2 className="text-4xl font-bold font-sans mb-4">Welcome to EasyMart</h2>

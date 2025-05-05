@@ -40,9 +40,9 @@ const HomePage = () => {
       {/* begins interactive ontent */}
       <div className="relative z-10 min-h-screen flex flex-col">
         {/* header */}
-        <nav className="bg-red-400/100 shadow p-4 font-sans flex justify-between items-center">
+        <nav className="bg-blue-400/100 shadow p-4 font-sans flex justify-between items-center">
           <h1 className="text-xl font-bold font-sans text-white">EasyMart</h1>
-          <button onClick={handleLogout} className="text-white font-sans font-semibold hover:underline">
+          <button onClick={handleLogout} className="text-black font-sans bg-white p-4 rounded-2xl font-semibold hover:underline">
             Logout
           </button>
         </nav>

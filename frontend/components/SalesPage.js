@@ -55,7 +55,7 @@ const SalesPage = () => {
                   : "No reviews yet"}
               </p>
               <p className="text-sm text-gray-500">
-                Sale ends on {new Date(product.end_date).toLocaleDateString()}
+                ends on {new Date(product.end_date).toLocaleDateString()}
               </p>
             </div>
           </div>
