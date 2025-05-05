@@ -25,6 +25,7 @@ const LoginPage = () => {
 
         if (success === true) {
           localStorage.setItem("token", "dummy-token"); // optional token logic
+          localStorage.setItem("username", username);
           router.push("/home");
         } else {
           alert("Login failed: Incorrect username or password");
@@ -60,7 +61,7 @@ const LoginPage = () => {
           Login
         </button>
       </form>
-      <p className="mt-4 text-sm">
+      <p className="mt-4 text-sm font-sans">
         Don&apos;t have an account?{" "}
         <Link href="/signup" className="text-blue-500">Sign up</Link>
       </p>

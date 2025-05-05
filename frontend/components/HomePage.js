@@ -3,12 +3,14 @@
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const HomePage = () => {
   const router = useRouter();
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("username");
     router.push("/");
   };
 
@@ -25,7 +27,7 @@ const HomePage = () => {
       {/* Main content */}
       <main className="p-6 grid gap-4">
         <Link href="/products" className="block bg-blue-500 text-white p-4 rounded shadow hover:bg-blue-600 transition">
-          🔍 Search Products
+          🔍 Browse Products
         </Link>
         <Link href="/review" className="block bg-green-500 text-white p-4 rounded shadow hover:bg-green-600 transition">
           📝 View Reviews
@@ -33,7 +35,7 @@ const HomePage = () => {
         <Link href="/orders" className="block bg-purple-500 text-white p-4 rounded shadow hover:bg-purple-600 transition">
           📦 Your Orders
         </Link>
-        <Link href="/edit-profile" className="block bg-orange-500 text-white p-4 rounded shadow hover:bg-orange-600 transition">
+        <Link href="/profile" className="block bg-orange-500 text-white p-4 rounded shadow hover:bg-orange-600 transition">
           👤 Your Profile
         </Link>
       </main>

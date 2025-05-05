@@ -21,25 +21,20 @@
       "static/chunks/main-app.js",
       "static/chunks/app/home/page.js"
     ],
+    "/profile/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/profile/page.js"
+    ],
     "/products/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/products/page.js"
     ],
-    "/review/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/review/page.js"
-    ],
     "/orders/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/orders/page.js"
-    ],
-    "/edit-profile/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/edit-profile/page.js"
     ]
   }
 }

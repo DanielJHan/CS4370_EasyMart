@@ -10,26 +10,47 @@ const EditProfilePage = () => {
   const [message, setMessage] = useState("");
   const router = useRouter();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!currentPassword || !newPassword || !confirmPassword) {
       setMessage("Please fill out all fields.");
       return;
     }
-
+  
     if (newPassword !== confirmPassword) {
       setMessage("New passwords do not match.");
       return;
     }
-
-    // Simulate API success
-    setMessage("Password updated successfully.");
-    setTimeout(() => {
-      router.push("/home"); // Redirect after success
-    }, 1500);
-
-    // Reset fields
+  
+    try {
+      const response = await fetch("http://localhost:8080/user/change-password", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: localStorage.getItem("username"), // or however you're tracking the user
+          currentPassword,
+          newPassword,
+        }),
+      });
+  
+      const result = await response.text();
+  
+      if (response.ok) {
+        setMessage("Password updated successfully.");
+        setTimeout(() => {
+          router.push("/home");
+        }, 1500);
+      } else {
+        setMessage("Failed: " + result);
+      }
+    } catch (err) {
+      console.error("Error updating password:", err);
+      setMessage("An error occurred.");
+    }
+  
     setCurrentPassword("");
     setNewPassword("");
     setConfirmPassword("");
@@ -66,7 +87,7 @@ const EditProfilePage = () => {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </div>
-        {message && <p className="text-sm text-green-600">{message}</p>}
+        {message && <p className="text-sm text-blue-600">{message}</p>}
         <button
           type="submit"
           className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
