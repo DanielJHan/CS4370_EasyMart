@@ -12,6 +12,8 @@ const EditProfilePage = () => {
   const [message, setMessage] = useState("");
   const router = useRouter();
   const [username, setUsername] = useState("");
+  const [totalOrders, setTotalOrders] = useState(0);
+  const [totalSpent, setTotalSpent] = useState(0);
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
@@ -27,6 +29,19 @@ const EditProfilePage = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const userId = localStorage.getItem("user_id");
+    if (!userId) return;
+  
+    fetch(`http://localhost:8080/orders/user-summary/${userId}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setTotalOrders(data.total_orders);
+        setTotalSpent(data.total_spent);
+      })
+      .catch((err) => console.error("Failed to retrieve order stats:", err));
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
   
@@ -36,7 +51,7 @@ const EditProfilePage = () => {
     }
   
     if (newPassword !== confirmPassword) {
-      setMessage("New passwords do not match.");
+      setMessage("New password fields do not match.");
       return;
     }
 
@@ -81,10 +96,16 @@ const EditProfilePage = () => {
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow">
       <h2 className="text-2xl font-bold mb-4">Welcome, {username}!</h2>
-      <h2 className="text-2xl font-bold mb-4">Change Password</h2>
+      <p className="mb-4 font-sans text-gray-700">
+        Orders placed: <span className="font-semibold">{totalOrders}</span> 
+      </p>
+      <p className="mb-4 font-sans text-gray-700">
+        Total money spent: <span className="font-semibold">${parseFloat(totalSpent).toFixed(2)}</span>
+      </p>
+      <h2 className="text-2xl font-sans font-bold mb-4">Change Password</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block font-medium mb-1">Current Password</label>
+          <label className="block font-medium mb-1 font-sans ">Current Password</label>
           <input
             type="password"
             className="w-full border px-3 py-2 rounded"
@@ -93,7 +114,7 @@ const EditProfilePage = () => {
           />
         </div>
         <div>
-          <label className="block font-medium mb-1">New Password</label>
+          <label className="block font-sans font-medium mb-1">New Password</label>
           <input
             type="password"
             className="w-full border px-3 py-2 rounded"
@@ -102,7 +123,7 @@ const EditProfilePage = () => {
           />
         </div>
         <div>
-          <label className="block font-medium mb-1">Confirm New Password</label>
+          <label className="block font-sans font-medium mb-1">Confirm New Password</label>
           <input
             type="password"
             className="w-full border px-3 py-2 rounded"
@@ -110,15 +131,15 @@ const EditProfilePage = () => {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </div>
-        {message && <p className="text-sm text-blue-600">{message}</p>}
+        {message && <p className="text-sm font-sans text-blue-600">{message}</p>}
         <button
           type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          className="bg-blue-500 text-white font-sans px-4 py-2 rounded hover:bg-blue-600"
         >
           Update Password
         </button>
         <button
-          className="bg-red-500 text-white ml-2 px-4 py-2 rounded hover:bg-red-600"
+          className="bg-green-500 text-white ml-2 font-sans px-4 py-2 rounded hover:bg-green-600"
         >
           <Link href={"/home"}>Go Home</Link>
         </button>

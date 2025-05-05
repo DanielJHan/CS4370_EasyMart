@@ -19,13 +19,13 @@ const ProductsPage = () => {
   return (
     <div className="max-w-3xl mx-auto p-4">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">Products</h1>
-        <Link href="/home" className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded">
+        <h1 className="text-2xl font-sans font-bold">Products</h1>
+        <Link href="/home" className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 font-sans rounded">
           Return to Home
         </Link>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-4 font-sans">
       {products.map((product) => (
         <div 
           key={product.product_id}
@@ -60,7 +60,7 @@ const ProductsPage = () => {
                 [product.product_id]: Math.max((prev[product.product_id] || 0) - 1, 0),
               }))
             }
-            className="bg-blue-500 text-white font-bold px-3 py-1 rounded-full hover:bg-blue-600 transition"
+            className="bg-white text-black font-bold px-3 py-1 rounded-full hover:bg-blue-600 transition"
           >
             –
           </button>
@@ -74,7 +74,7 @@ const ProductsPage = () => {
                 [product.product_id]: (prev[product.product_id] || 0) + 1,
               }))
             }
-            className="bg-blue-500 text-white font-bold px-3 py-1 rounded-full hover:bg-blue-600 transition"
+            className="bg-white text-black font-bold px-3 py-1 rounded-full hover:bg-blue-600 transition"
           >
             +
           </button>
