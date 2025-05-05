@@ -144,6 +144,46 @@ const EditProfilePage = () => {
           <Link href={"/home"}>Go Home</Link>
         </button>
       </form>
+      <hr className="my-6" />
+      <h2 className="text-xl font-bold mb-2 text-red-600 font-sans">Account Deletion</h2>
+      <div className="space-y-2">
+        <input
+          type="password"
+          placeholder="Confirm your password"
+          className="w-full border px-3 py-2 rounded font-sans"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        />
+        <button
+          onClick={async () => {
+            const confirmed = window.confirm("Are you sure you want to delete your account? This cannot be undone.");
+            if (!confirmed) return;
+
+            const response = await fetch("http://localhost:8080/user/delete", {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                username: localStorage.getItem("username"),
+                password: confirmPassword,
+              }),
+            });
+
+            const success = await response.json();
+            if (success) {
+              localStorage.clear();
+              alert("Account deleted.");
+              router.push("/");
+            } else {
+              alert("Incorrect password. Account not deleted.");
+            }
+          }}
+          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+        >
+          Delete My Account
+        </button>
+      </div>
     </div>
   );
 };
