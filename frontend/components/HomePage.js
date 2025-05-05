@@ -9,7 +9,7 @@ const HomePage = () => {
   const router = useRouter();
   const [username, setUsername] = useState(null);
 
-  // redirect to landing page if not logged in
+  // redirect to landing page if not logged-in
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
     if (!storedUsername) {
