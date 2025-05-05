@@ -42,7 +42,7 @@ const ProductsPage = () => {
         <div className="flex-grow">
           <h2 className="text-lg font-semibold">{product.model}</h2>
           <p className="text-gray-600">${product.price.toFixed(2)}</p>
-          <p className="text-sm text-yellow-600">
+          <p className="text-sm text-blue-600">
             Rating:{" "}
             {product.avg_rating !== null && product.avg_rating !== undefined
               ? product.avg_rating.toFixed(1) + " / 5"

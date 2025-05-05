@@ -16,7 +16,7 @@ const SalesPage = () => {
   return (
     <div className="max-w-3xl mx-auto p-4">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-sans font-bold">Sale Items</h1>
+        <h1 className="text-2xl font-sans font-bold">Current Discounts</h1>
         <Link
           href="/home"
           className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 font-sans rounded"
@@ -24,6 +24,7 @@ const SalesPage = () => {
           Return to Home
         </Link>
       </div>
+      <p className="font-md font-sans text-black-500 mb-5">Note: conditions subject to change.</p>
 
       <div className="space-y-4 font-sans">
         {products.map((product) => (
@@ -40,7 +41,7 @@ const SalesPage = () => {
             <div className="flex-grow">
               <h2 className="text-lg font-semibold">{product.model}</h2>
               <p className="text-gray-600">
-                <span className="line-through mr-2 text-red-500">
+                <span className="line-through mr-2 text-gray-700">
                   ${product.original_price.toFixed(2)}
                 </span>
                 <span className="text-green-600">
