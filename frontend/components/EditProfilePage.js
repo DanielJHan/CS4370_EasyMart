@@ -10,6 +10,15 @@ const EditProfilePage = () => {
   const [message, setMessage] = useState("");
   const router = useRouter();
 
+  useEffect(() => {
+    const username = localStorage.getItem("username");
+    const userId = localStorage.getItem("user_id");
+
+    if (!username || !userId) {
+      router.push("/"); // redirect to landing page if not logged in
+    }
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
   

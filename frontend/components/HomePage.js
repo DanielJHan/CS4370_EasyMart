@@ -9,7 +9,7 @@ const HomePage = () => {
   const router = useRouter();
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("user_id");
     localStorage.removeItem("username");
     router.push("/");
   };
@@ -36,7 +36,7 @@ const HomePage = () => {
           📦 Your Orders
         </Link>
         <Link href="/profile" className="block bg-orange-500 text-white p-4 rounded shadow hover:bg-orange-600 transition">
-          👤 Your Profile
+          👤 View Your Profile
         </Link>
       </main>
     </div>

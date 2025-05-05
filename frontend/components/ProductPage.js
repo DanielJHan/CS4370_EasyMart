@@ -1,9 +1,21 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
+
+  const router = useRouter();
+  
+  useEffect(() => {
+    const username = localStorage.getItem("username");
+    const userId = localStorage.getItem("user_id");
+    
+    if (!username || !userId) {
+      router.push("/"); // redirect to landing page if not logged in
+    }
+  }, []);
 
   useEffect(() => {
     fetch("http://localhost:8080/products")

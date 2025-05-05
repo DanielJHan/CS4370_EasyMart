@@ -24,14 +24,13 @@ const LoginPage = () => {
         const data = await response.json();
 
         if (data.success) {
-          localStorage.setItem("token", "dummy-token"); // optional
           localStorage.setItem("username", username);
-          localStorage.setItem("user_id", data.user_id); // ✅ now saved for later
+          localStorage.setItem("user_id", data.user_id); // kept for orders page
           router.push("/home");
         } else {
           alert("Login failed: Incorrect username or password");
         }
-        
+
       } catch (err) {
         console.error("Login error:", err);
         alert("An error occurred during login");

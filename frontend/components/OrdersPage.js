@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const ordersData = [
   { id: 1, product: "Laptop", quantity: 1, price: 999.99, status: "Shipped" },
@@ -11,6 +12,18 @@ const ordersData = [
 ];
 
 const OrdersPage = () => {
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const username = localStorage.getItem("username");
+    const userId = localStorage.getItem("user_id");
+
+    if (!username || !userId) {
+      router.push("/"); // redirect to landing page if not logged in
+    }
+  }, []);
+
   return (
     <div className="max-w-3xl mx-auto mt-10 p-6 bg-white shadow rounded">
       <h2 className="text-2xl font-bold mb-4">Your Orders</h2>
