@@ -3,21 +3,26 @@
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 
 const HomePage = () => {
   const router = useRouter();
+  const [username, setUsername] = useState(null);
 
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("username");
+    if (!storedUsername) {
+      router.push("/");
+    } else {
+      setUsername(storedUsername);
+    }
+  }, []);
   // handles logout
   const handleLogout = () => {
     localStorage.removeItem("user_id");
     localStorage.removeItem("username");
     router.push("/");
   };
-
-  const username = localStorage.getItem("username");
-  if (!username) {
-    router.push("/")
-  }
 
   return (
     <div
@@ -47,7 +52,7 @@ const HomePage = () => {
           <Link href="/products" className="block bg-blue-500 font-sans text-white text-xl flex items-center p-4 rounded-2xl shadow hover:bg-blue-600 transition">
             🔍 Browse Products
           </Link>
-          <Link href="/review" className="block bg-green-500 font-sans text-white text-xl flex items-center p-4 rounded-2xl shadow hover:bg-green-600 transition">
+          <Link href="/sales" className="block bg-green-500 font-sans text-white text-xl flex items-center p-4 rounded-2xl shadow hover:bg-green-600 transition">
             📝 View Reviews
           </Link>
           <Link href="/orders" className="block bg-red-500 font-sans text-white text-xl flex items-center p-4 rounded-2xl shadow hover:bg-red-600 transition">

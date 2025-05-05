@@ -21,15 +21,20 @@
       "static/chunks/main-app.js",
       "static/chunks/app/home/page.js"
     ],
-    "/orders/page": [
+    "/sales/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/orders/page.js"
+      "static/chunks/app/sales/page.js"
     ],
     "/profile/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/profile/page.js"
+    ],
+    "/orders/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/orders/page.js"
     ],
     "/products/page": [
       "static/chunks/webpack.js",

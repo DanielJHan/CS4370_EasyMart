@@ -1,10 +1,10 @@
 import React from 'react'
-import ReviewsPage from '../../../components/ReviewPage'
+import SalesPage from '../../../components/SalesPage'
 
 export default function page() {
   return (
     <>
-        <ReviewsPage />
+        <SalesPage />
     </>
   )
 }
